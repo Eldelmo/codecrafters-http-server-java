@@ -40,6 +40,23 @@ public class Main {
     	   response = "HTTP/1.1 200 OK\r\n" + contentype + contentlength + "\r\n\r\n" + substring + "\r\n";
     	   
     	   
+       }else if(path.startsWith("/user-agent")){
+    	   String userAgent ="";
+    	   String contentype = "Content-type: text/plain \r\n";
+    	  
+    	   while(!line.isEmpty()) {
+    		   line = in.readLine();
+    		   if(line.contains("User-Agent")) {
+    			   userAgent = line.split(": ")[1];
+    		   }
+    	   }
+    	   
+    	   userAgent.trim();
+    	   String contentlength = "Content-Length: "+userAgent.length() + "\r\n";
+    	   response = "HTTP/1.1 200 OK\r\n" + contentype + contentlength + "\r\n" + userAgent;
+    	   
+    	   	
+    	   
        }else {
     	   response ="HTTP/1.1 404 Not Found\r\n\r\n";
        }
