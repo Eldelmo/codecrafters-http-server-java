@@ -35,7 +35,7 @@ public class Main {
     	   String substring =
     			   path.startsWith("/echo/")? path.substring(6) : path.substring(5);
     	   String contentype = "Content-type: text/plain \r\n";
-    	   String contentlength = substring.length();
+    	   String contentlength = "Content-Length: " + substring.length();
     	   
     	   response = "HTTP/1.1 200 OK\r\n" + contentype + contentlength + "\r\n\r\n" + substring + "\r\n";
     	   
