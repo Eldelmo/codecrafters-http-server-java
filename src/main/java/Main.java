@@ -59,6 +59,7 @@ public class Main {
       System.out.println(method);
       System.out.println(path);
       System.out.println(line);
+      System.out.println(directory);
       if (path.equals("/")) {
    	   response = "HTTP/1.1 200 OK\r\n\r\n";
       }else if(path.startsWith("/echo/")) {
