@@ -118,6 +118,7 @@ public class Main {
     	  Path file = Path.of(filePath);
     	  Files.writeString(file,bodyContent);
     	  response = "HTTP/1.1 201 Created\r\n\r\n";
+    	  System.out.println("201");
     	  
       }else {
     	  response ="HTTP/1.1 404 Not Found\r\n\r\n";
