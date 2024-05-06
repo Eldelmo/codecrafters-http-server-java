@@ -56,7 +56,7 @@ public class Main {
       String[] parts = line.split(" ");
       String method = parts[0];
       String path = parts[1];
-      
+      System.out.println(method);
       if (path.equals("/")) {
    	   response = "HTTP/1.1 200 OK\r\n\r\n";
       }else if(path.startsWith("/echo/")) {
@@ -118,7 +118,7 @@ public class Main {
     	  Path file = Path.of(filePath);
     	  Files.writeString(file,bodyContent);
     	  response = "HTTP/1.1 201 Created\r\n\r\n";
-    	  System.out.println("201");
+    	  
     	  
       }else {
     	  response ="HTTP/1.1 404 Not Found\r\n\r\n";
