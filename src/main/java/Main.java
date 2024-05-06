@@ -101,25 +101,35 @@ public class Main {
     	  }
     	  
     	  
-      }else if(method.equals("POST") && path.matches("/files/.*")) {
-    	  int contentLength = 0;
-    	  while(!line.isEmpty()) {
-    		  line = in.readLine();
-    		  if(line.contains("Content-Length")) {
-    			  contentLength = Integer.parseInt(line.split(":")[1].trim());
-    		  }
-    		  
+      }else if(method.equals("POST")) {
+    	  if(path.matches("/files/.*")) {
+    		  int contentLength = 0;
+        	  while(!line.isEmpty()) {
+        		  line = in.readLine();
+        		  if(line.contains("Content-Length")) {
+        			  contentLength = Integer.parseInt(line.split(":")[1].trim());
+        		  }
+        		  
+        	  }
+        	  
+        	  char[] body = new char [contentLength];
+        	  int bytesRead = 0;
+        	  while(bytesRead <contentLength) {
+        		  bytesRead+= in.read(body,bytesRead,contentLength-bytesRead);
+        	  }
+        	  String bodyContent = new String(body);
+        	  String filePath = directory + path.substring(7);
+        	  Path file = Path.of(filePath);
+        	  Files.writeString(file,bodyContent);
+        	  response = "HTTP/1.1 201 Created\r\n\r\n";
+        	  
+        	  
     	  }
-    	  char[] body = new char [contentLength];
-    	  int bytesRead = 0;
-    	  while(bytesRead <contentLength) {
-    		  bytesRead+= in.read(body,bytesRead,contentLength-bytesRead);
+    	  else {
+    		  response ="HTTP/1.1 404 Not Found\r\n\r\n";
     	  }
-    	  String bodyContent = new String(body);
-    	  String filePath = directory + path.substring(7);
-    	  Path file = Path.of(filePath);
-    	  Files.writeString(file,bodyContent);
-    	  response = "HTTP/1.1 201 Created\r\n\r\n";
+    	  
+    	  
     	  
     	  
       }else {
