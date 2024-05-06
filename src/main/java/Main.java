@@ -9,14 +9,27 @@ public class Main {
   public static void main(String[] args) {
 	 System.out.println("Logs from your program will appear here!");
      ServerSocket serverSocket = null;
-     Socket clientSocket = null;
+     
      try {
        serverSocket = new ServerSocket(4221);
        serverSocket.setReuseAddress(true);
-       clientSocket = serverSocket.accept(); // Wait for connection from client.
-       
-       
-       
+       try {
+    	   while(true) {
+    		   var accept = serverSocket.accept();
+    		   Thread.ofVirtual().start(()-> {
+    			   try {
+    				   getRes(accept);
+    			   }catch (IOException e){
+    				   throw new RuntimeException(e)
+    			   }
+    		   });
+    	   }
+       }
+    	   
+       }finally { 	   
+    	   serverSocket.close();
+
+ 
      } catch (IOException e) {
        System.out.println("IOException: " + e.getMessage());
      }
