@@ -21,7 +21,7 @@ public class Main {
        serverSocket = new ServerSocket(4221);
        serverSocket.setReuseAddress(true);
        try {
-    	   final string d= directory;
+    	   final String d= directory;
     	   while(true) {
     		   var accept = serverSocket.accept();
     		   Thread.ofVirtual().start(()-> {
