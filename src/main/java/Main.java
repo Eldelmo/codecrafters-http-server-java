@@ -91,9 +91,11 @@ public class Main {
     		  System.out.println(new String(fileContents));
     		  response ="HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: application/octet-stream\r\nContent-Length: " +fileContents.length + "\r\n\r\n" + new String(fileContents);
     	  }
+    	  else {}
+    	  response ="HTTP/1.1 404 Not Found\r\n\r\n";
     	  
       }else {
-   	   response ="HTTP/1.1 404 Not Found\r\n\r\n";
+    	  response ="HTTP/1.1 404 Not Found\r\n\r\n";
       }
       outStream.write(response.getBytes());
 	  
