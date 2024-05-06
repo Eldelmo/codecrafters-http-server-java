@@ -5,6 +5,9 @@ import java.io.OutputStream;
 import java.io.*;
 import java.nio.file.Files;
 import java.io.File;
+import java.nio.file.Path;
+import java.io.FileWriter;
+
 
 
 public class Main {
@@ -95,6 +98,26 @@ public class Main {
     		  response ="HTTP/1.1 404 Not Found\r\n\r\n";
     	  }
     	  
+    	  
+      }else if(method.equals("POST") && path.matches("/files/.*")) {
+    	  int contentLength = 0;
+    	  while(!requestline.isEmpty()) {
+    		  requestLine = in.readLine();
+    		  if(requestLine.contains("Content-Length")) {
+    			  contentLength = Integer.parseInt(requestLine.split(":")[1].trim());
+    		  }
+    		  
+    	  }
+    	  char[] body = new char [contentLength];
+    	  int bytesRead = 0;
+    	  while(bytesRead <contentLength) {
+    		  bytesRead+= in.read(body,bytesRead,contentLength-bytesRead);
+    	  }
+    	  String bodyContent = new String(body);
+    	  String filePath = directory + path.substring(7);
+    	  Path file = Path.of(filePath);
+    	  Files.writeString(file,bodycontent);
+    	  response = "HTTP/1.1 201 Created\r\n\r\n";
     	  
       }else {
     	  response ="HTTP/1.1 404 Not Found\r\n\r\n";
