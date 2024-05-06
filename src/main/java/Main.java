@@ -3,22 +3,30 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.OutputStream;
 import java.io.*;
+import java.nio.file.Files;
+import java.io.File;
 
 
 public class Main {
   public static void main(String[] args) {
 	 System.out.println("Logs from your program will appear here!");
      ServerSocket serverSocket = null;
+     String directory = null;
+     if(args.length == 2 && args[0].equals("--directory")) {
+    	 directory = args[1];
+     }
+     
      
      try {
        serverSocket = new ServerSocket(4221);
        serverSocket.setReuseAddress(true);
        try {
+    	   final string d= directory;
     	   while(true) {
     		   var accept = serverSocket.accept();
     		   Thread.ofVirtual().start(()-> {
     			   try {
-    				   getRes(accept);
+    				   getRes(accept,d);
     			   }catch (IOException e){
     				   throw new RuntimeException(e);
     			   }
@@ -34,8 +42,9 @@ public class Main {
      
  }
   
-  private static void getRes(Socket clientSocket) throws IOException{
+  private static void getRes(Socket clientSocket, String directory) throws IOException{
 	  System.out.println("accepted new connection");
+	  System.out.println("accepted new connection" + directory);
       BufferedReader in = new BufferedReader(
    	          new InputStreamReader(clientSocket.getInputStream()));
       OutputStream outStream = clientSocket.getOutputStream();
@@ -73,6 +82,19 @@ public class Main {
    	   
    	   	
    	   
+      }else if(path.startsWith("/files/")){
+    	  String filename = path.substring(7);
+    	  File file = new File(directory,filename);
+    	  
+    	  if(file.exists()) {
+    		  byte[] fileContents = Files.readAllBytes(file.toPath());
+    		  System.out.println(new String(fileContents));
+    		  response ="HTTP/1.1 200 OK\r\nConnection: close\\r\\nContent-Type: application/octet-stream\\r\\nContent-Length: " +fileContents.length + "\r\n\r\n" + new String(fileContents);
+    	  }else {
+    		  response = "HTTP/1.1 404 Not Found\r\n\r\n";
+    	  }
+    	  
+    	  
       }else {
    	   response ="HTTP/1.1 404 Not Found\r\n\r\n";
       }
