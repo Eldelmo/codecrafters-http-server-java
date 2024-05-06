@@ -89,7 +89,7 @@ public class Main {
     	  if(file.exists()) {
     		  byte[] fileContents = Files.readAllBytes(file.toPath());
     		  System.out.println(new String(fileContents));
-    		  response ="HTTP/1.1 200 OK\r\nConnection: close\\r\\nContent-Type: application/octet-stream\\r\\nContent-Length: " +fileContents.length + "\r\n\r\n" + new String(fileContents);
+    		  response ="HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: application/octet-stream\r\nContent-Length: " +fileContents.length + "\r\n\r\n" + new String(fileContents);
     	  }
     	  
       }else {
