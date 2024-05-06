@@ -88,20 +88,6 @@ public class Main {
    	   
    	   	
    	   
-      }else if(path.matches("/files/.*")){
-    	  String filename = path.substring(7);
-    	  File file = new File(directory,filename);
-    	  
-    	  if(file.exists()) {
-    		  byte[] fileContents = Files.readAllBytes(file.toPath());
-    		  System.out.println(new String(fileContents));
-    		  response ="HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: application/octet-stream\r\nContent-Length: " +fileContents.length + "\r\n\r\n" + new String(fileContents);
-    	  }
-    	  else {
-    		  response ="HTTP/1.1 404 Not Found\r\n\r\n";
-    	  }
-    	  
-    	  
       }else if(method.equals("POST")) {
     	  if(path.matches("/files/.*")) {
     		  int contentLength = 0;
@@ -131,6 +117,20 @@ public class Main {
     	  }
     	  
     	  
+    	  
+    	  
+      }else if(path.matches("/files/.*")){
+    	  String filename = path.substring(7);
+    	  File file = new File(directory,filename);
+    	  
+    	  if(file.exists()) {
+    		  byte[] fileContents = Files.readAllBytes(file.toPath());
+    		  System.out.println(new String(fileContents));
+    		  response ="HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: application/octet-stream\r\nContent-Length: " +fileContents.length + "\r\n\r\n" + new String(fileContents);
+    	  }
+    	  else {
+    		  response ="HTTP/1.1 404 Not Found\r\n\r\n";
+    	  }
     	  
     	  
       }else {
