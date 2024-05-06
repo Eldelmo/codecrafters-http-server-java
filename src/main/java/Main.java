@@ -82,7 +82,7 @@ public class Main {
    	   
    	   	
    	   
-      }else if(path.startsWith("/files/.*")){
+      }else if(path.matches("/files/.*")){
     	  String filename = path.substring(7);
     	  File file = new File(directory,filename);
     	  
