@@ -27,11 +27,12 @@ public class Main {
        }finally { 	   
     	   serverSocket.close();
 
- 
-     } catch (IOException e) {
-       System.out.println("IOException: " + e.getMessage());
-     }
-  }
+     } 
+  }catch (IOException e) {
+      System.out.println("IOException: " + e.getMessage());
+    }
+     
+ }
   
   private static void getRes(Socket clientSocket) throws IOException{
 	  System.out.println("accepted new connection");
