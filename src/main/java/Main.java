@@ -101,10 +101,10 @@ public class Main {
     	  
       }else if(method.equals("POST") && path.matches("/files/.*")) {
     	  int contentLength = 0;
-    	  while(!requestline.isEmpty()) {
-    		  requestLine = in.readLine();
-    		  if(requestLine.contains("Content-Length")) {
-    			  contentLength = Integer.parseInt(requestLine.split(":")[1].trim());
+    	  while(!line.isEmpty()) {
+    		  line = in.readLine();
+    		  if(line.contains("Content-Length")) {
+    			  contentLength = Integer.parseInt(line.split(":")[1].trim());
     		  }
     		  
     	  }
@@ -116,7 +116,7 @@ public class Main {
     	  String bodyContent = new String(body);
     	  String filePath = directory + path.substring(7);
     	  Path file = Path.of(filePath);
-    	  Files.writeString(file,bodycontent);
+    	  Files.writeString(file,bodyContent);
     	  response = "HTTP/1.1 201 Created\r\n\r\n";
     	  
       }else {
